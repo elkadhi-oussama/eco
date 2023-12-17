@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Link, Route, Routes } from "react-router-dom";
+import "./App.css";
+import { product } from "./data";
+import { useState } from "react";
+import Panier from "./Panier";
 function App() {
+  const [listToBuy, setlistToBuy] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="navBar">
+                 <Link to="/panier"  ><img src="./images/panier.png" alt="" /></Link> 
+                {listToBuy.length > 0 ? <p> {listToBuy.length} </p> : null}
+              </div>
+
+              <div className="allCards">
+                {product.map((pro) => {
+                  return (
+                    <div className="card">
+                      <img src={pro.img} alt="" />
+                      <h1> {pro.name} </h1>
+                      <p> {pro.price} </p>
+                      <button
+                        onClick={() => {
+                          return (
+                            !listToBuy.includes(pro) &&
+                            setlistToBuy([...listToBuy, pro])
+                          );
+                        }}
+                      >
+                        {" "}
+                        BUY{" "}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          }
+        />
+        <Route path="/panier" element={<Panier  listToBuy={listToBuy} />} />
+      </Routes>
     </div>
   );
 }
