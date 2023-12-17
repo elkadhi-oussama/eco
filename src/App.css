@@ -41,14 +41,15 @@ position: absolute;
   border: 2px solid black;
   width: 20%;
   margin: 20px;
+  height: 600px;
+
   text-align: center;
 }
 .card img{
   width: 90%;
-  height: 75%;
+  height: 70%;
   display: block;
   margin: 5px auto;
-  object-fit: cover;
 }
 .card button{
   padding: 10px;
@@ -65,3 +66,48 @@ position: absolute;
   color: white;
 }
 /* end card */
+
+
+/* panier css  */
+.Panier{
+  width: 70%;
+  margin: 20px auto;
+  text-align: center;
+}
+.cardOne{
+  border: 1px solid black;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.cardOne img{
+  width: 10%;
+}
+.cardOne button{
+  width: 3%;
+  padding: 5px;
+  border-radius: 8px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.cardOne button:hover{
+ background-color: lightgreen;
+ color: aliceblue;
+}
+.cardOne button:hover:last-child{
+  background-color: lightcoral;
+  color: aliceblue;
+ }
+.cardOne input{
+  width: 5%;
+  height: 20px;
+}
+.allCardOne{
+  
+}
+/* end css */

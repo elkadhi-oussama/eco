@@ -13,17 +13,19 @@ function App() {
           element={
             <>
               <div className="navBar">
-                 <Link to="/panier"  ><img src="./images/panier.png" alt="" /></Link> 
+                <Link to="/panier">
+                  <img src="./images/panier.png" alt="" />
+                </Link>
                 {listToBuy.length > 0 ? <p> {listToBuy.length} </p> : null}
               </div>
 
               <div className="allCards">
                 {product.map((pro) => {
                   return (
-                    <div className="card">
+                    <div key={pro.id} className="card">
                       <img src={pro.img} alt="" />
                       <h1> {pro.name} </h1>
-                      <p> {pro.price} </p>
+                      <p> {pro.price} $</p>
                       <button
                         onClick={() => {
                           return (
@@ -42,7 +44,7 @@ function App() {
             </>
           }
         />
-        <Route path="/panier" element={<Panier  listToBuy={listToBuy} />} />
+        <Route path="/panier" element={<Panier listToBuy={listToBuy}  setlistToBuy={setlistToBuy} />} />
       </Routes>
     </div>
   );
