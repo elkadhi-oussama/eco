@@ -1,33 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Panier = ({ listToBuy, setlistToBuy }) => {
-  var sum = 0;
-
-  // this state is for make only counter alone
   const [counter, setcounter] = useState(listToBuy.map(() => 1));
+  const [sum, setSum] = useState(0);
 
-  console.log("this counter : ", counter); // [1,1,3,1]
-  // end
-
-  // this function for decrement only the counter clicked
-  function decermentation(index) {
+  useEffect(() => {
+    // Calculate the sum whenever counter or listToBuy changes
+    const newSum = listToBuy.reduce(
+      (acc, el, i) => acc + parseInt(el.price) * counter[i],
+      0
+    );
+    setSum(newSum);
+  }, [listToBuy, counter]);
+  // end Calculate
+// incr and decr 
+  function decrement(index) {
     const newCounter = [...counter];
     if (newCounter[index] > 1) {
-      newCounter[index] = Math.max(0, counter[index] - 1);
+      newCounter[index] = newCounter[index] - 1;
+      setcounter(newCounter);
     }
-    setcounter(newCounter);
   }
-  // end
-  // this function for increment only the counter clicked
-  function incermentation(index) {
+
+  function increment(index) {
     const newCounter = [...counter];
-
-    newCounter[index] = Math.max(0, counter[index] + 1);
-
+    newCounter[index] = newCounter[index] + 1;
     setcounter(newCounter);
   }
-  //end
+//end 
+// remove item
+  function removeItem(index) {
+    setlistToBuy((prevList) => {
+      const newList = [...prevList];
+      newList.splice(index, 1);
+      return newList;
+    });
+
+    setcounter((prevCounter) => {
+      const newCounter = [...prevCounter];
+      newCounter.splice(index, 1);
+      return newCounter;
+    });
+  }
+// end 
   return (
     <div className="Panier">
       <Link to="/">
@@ -40,24 +56,15 @@ const Panier = ({ listToBuy, setlistToBuy }) => {
             <img src={el.img} alt="" />
             <h1> {el.name} </h1>
             <p> {el.price} </p>
-            <button className="munis" onClick={() => decermentation(i)}>
+            <button className="munis" onClick={() => decrement(i)}>
               -
             </button>
-            <input type="number" value={counter[i]} />
-            <button className="plus" onClick={() => incermentation(i)}>
+            <input type="number" value={counter[i]} readOnly />
+            <button className="plus" onClick={() => increment(i)}>
               +
             </button>
-            <p> {(sum = sum + parseInt(el.price) * counter[i])} $ </p>
-
-            <button
-              onClick={() => (
-                setlistToBuy(listToBuy.filter((item) => item.id !== el.id)),
-                setcounter((counter.splice(i, 1),counter))
-              )}
-            >
-              {" "}
-              X{" "}
-            </button>
+            <p> {parseInt(el.price) * counter[i]} $ </p>
+            <button onClick={() => removeItem(i)}> X </button>
           </div>
         ))}
       </div>
